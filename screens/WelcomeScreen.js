@@ -38,7 +38,20 @@ export default class WelcomeScreen extends Component {
     }else{
       firebase.auth().createUserWithEmailAndPassword(username, password)
       .then((response)=>{
-        return Alert.alert("User Added Successfully")
+        db.collection('users').add({
+          first_name:this.state.firstName,
+          last_name:this.state.lastName,
+          mobile_number:this.state.mobileNumber,
+          username:this.state.username,
+          address:this.state.address
+        })
+        return  Alert.alert(
+             'User Added Successfully',
+             '',
+             [
+               {text: 'OK', onPress: () => this.setState({"isVisible" : false})},
+             ]
+         );
       })
       .catch(function(error) {
         // Handle Errors here.
